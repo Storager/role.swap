@@ -1,0 +1,29 @@
+- name: check if swapfile exists
+  stat:
+    path: "/opt/swapfile"
+  register: swp
+
+- name: create swapfile
+  shell: "dd if=/dev/zero of=/opt/swapfile bs=1024k count={{swap_size}}"
+  when: swp.stat.exists != True
+
+- name: create swap
+  shell: "mkswap /opt/swapfile"
+  when: swp.stat.exists != True
+
+- name: change mode to swapfile
+  file:
+    path: /opt/swapfile
+    mode: 600
+
+- name: activate swap 
+  shell: "swapon -av /opt/swapfile"
+  when: swp.stat.exists != True
+
+- name: Adding line for creation swapfile
+  lineinfile:
+    dest: "/etc/fstab"
+    insertafter: EOF
+    state: present
+    create: yes
+    line: "/opt/swapfile	swap	swap	defaults	0	0"
