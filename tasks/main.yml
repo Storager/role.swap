@@ -14,9 +14,9 @@
 - name: change mode to swapfile
   file:
     path: /opt/swapfile
-    mode: 600
+    mode: 0600
 
-- name: activate swap 
+- name: activate swap
   shell: "swapon -av /opt/swapfile"
   when: swp.stat.exists != True
 
