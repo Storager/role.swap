@@ -1,6 +1,6 @@
 language: python
 install:
-  - sudo apt-get ansible && (sudo apt-get install virtualenv || sudo apt-get install python-virtualenv || pip install virtualenv)
+  - sudo apt-get install ansible && (sudo apt-get install virtualenv || sudo apt-get install python-virtualenv || sudo pip2 install virtualenv)
   - virtualenv ~/Ansible-lint
   - source ~/Ansible-lint/bin/activate
   - pip2 install ansible-lint==2.6.2 ansible==2.0.0.2
